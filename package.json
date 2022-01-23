@@ -1,0 +1,25 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "track employee using database",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marlowchu/Employee-Tracker.git"
+  },
+  "author": "Chuck Marlow",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Marlowchu/Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/Marlowchu/Employee-Tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.2.0",
+    "mysql2": "^2.3.3"
+  }
+}
