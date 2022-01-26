@@ -307,8 +307,14 @@ function updateEmployee(item,role) {
         .then (answer => {
             
             // choice = answer.choice
+            let sr = answer.role.split(" ")
+            let ar = sr[0]
 
-            db.query(`UPDATE employees set role_id = ${answer.role.charAt(0)} where id =${answer.choice.charAt(0)}`, function (err, results) {
+            let sc = answer.choice.split(" ")
+            let ac = sc[0]
+
+
+            db.query(`UPDATE employees set role_id = ${ar} where id =${ac}`, function (err, results) {
                 console.table(results)
 
             start();
