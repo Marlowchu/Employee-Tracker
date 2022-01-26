@@ -89,36 +89,37 @@ function start () {
 
             
             let employee = []
+            let role = []
 
-            db.query('SELECT first_name, last_name FROM employees', function (err, results) {
+            db.query('SELECT id, first_name, last_name FROM employees', function (err, results) {
                 
-
-                // let employee = [] 
                 results.forEach ((item) => {
-            // console.log (`${item.first_name} ${item.last_name}` )
-        //    employee.push (`${item.first_name} ${item.last_name}`)
-
-                // employee = `${results.first_name} ${results.last_name}`
-            // console.log (`${item.first_name} ${item.last_name}`)
-
-            const ind = `${item.first_name} ${item.last_name}`
+            const ind = `${item.id} ${item.first_name} ${item.last_name}`
             employee.push (ind)
+            })
+
+                    // console.log (employee)
+
+
+
+                    db.query('SELECT id, title FROM roles', function (err, results) {
+                
+                        results.forEach ((item) => {
+                    const inr = `${item.id} ${item.title}`
+                    role.push (inr)
+                    })
+        
+                            // console.log (role)
+        
+                    })
+                    updateEmployee(employee,role)
+
+            })
 
             
-            })
 
-                    console.log (employee)
+            
 
-                    updateEmployee(employee)
-
-
-                // const employees = results 
-                // console.table(employees)
-                // console.log (employees)
-
-                //  updateEmployee (employees)
-
-            })
                 break;
 
             
@@ -279,9 +280,12 @@ function addEmployee() {
 
 
 
-function updateEmployee(item) {
+function updateEmployee(item,role) {
 
-    // console.log ("Enter Manager information")
+    console.log ("item")
+    console.log ("role")
+
+    // let choice =
 
     inquirer
      .prompt([
@@ -290,13 +294,21 @@ function updateEmployee(item) {
              name: 'choice',
              message: "Choose an employee to update",
              choices: item
-         }
+         },
+         {
+            type: 'list',
+            name: 'role',
+            message: "Choose a new role",
+            choices: role
+        }
      
        
     ])
         .then (answer => {
             
-            db.query(`insert into employees (first_name, last_name, role_id, manager_id)  values ("${answer.first}", "${answer.last}", ${answer.role}, ${answer.manager})`, function (err, results) {
+            // choice = answer.choice
+
+            db.query(`UPDATE employees set role_id = ${answer.role.charAt(0)} where id =${answer.choice.charAt(0)}`, function (err, results) {
                 console.table(results)
 
             start();
