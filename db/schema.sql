@@ -1,5 +1,6 @@
 DROP DATABASE IF EXISTS etracker_db;
 CREATE DATABASE etracker_db;
+-- DROP tables IF EXISTS departments, employees, roles;
 
 USE etracker_db;
 
@@ -25,8 +26,6 @@ CREATE TABLE employees (
     role_id INT,
     manager_id INT,
     FOREIGN KEY (role_id)
-    REFERENCES roles(id),
-    FOREIGN KEY (manager_id)
-    REFERENCES employees(id)
+    REFERENCES roles(id)
     ON DELETE SET NULL
 );

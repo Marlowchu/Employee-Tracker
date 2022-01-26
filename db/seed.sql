@@ -14,14 +14,14 @@ VALUES ("Cashier", 50000, 1),
        ("Manager", 75000, 4),
        ("HR", 57000, 4);
 
-INSERT INTO employees (first_name, last_name, role_id)
-VALUES ("Jim", "Jones", 1),
-       ("Ben", "Mack", 2),
-       ("Ashley", "Stone", 2),
-       ("Mike", "Cuff", 4),
-       ("Steve", "Star", 7),
-       ("Kelly", "Bell", 5),
-       ("Chuck", "Holmes", 3),
-       ("Matt", "Zoe", 3),
-       ("Lisa", "Frank", 8),
-       ("Star", "Boss", 7);
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
+VALUES ("Jim", "Jones", 1, 5),
+       ("Ben", "Mack", 2, 5),
+       ("Ashley", "Stone", 2, 5),
+       ("Mike", "Cuff", 4, 5),
+       ("Steve", "Star", 7, 5),
+       ("Kelly", "Bell", 5, 10),
+       ("Chuck", "Holmes", 3, 10),
+       ("Matt", "Zoe", 3, 10),
+       ("Lisa", "Frank", 8, 10),
+       ("Star", "Boss", 7, 5);
