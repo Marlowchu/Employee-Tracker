@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Express middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
 
 // Connect to database
 const db = mysql.createConnection(
@@ -24,18 +24,13 @@ const db = mysql.createConnection(
   console.log(`Connected to the etracker_db database.`)
 );
 
-// // Query database
-// db.query('SELECT first_name, last_name FROM employees', function (err, results) {
-//   console.table(results)
-// });
-
-
+// connect to port
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
 
-
+// questions that that the program
 function start () {
 
     console.log ("Welcome to Employee Tracker (ET)")
@@ -91,6 +86,7 @@ function start () {
             let employee = []
             let role = []
 
+            // query to pass the name so the user can choose from a list
             db.query('SELECT id, first_name, last_name FROM employees', function (err, results) {
                 
                 results.forEach ((item) => {
@@ -98,10 +94,7 @@ function start () {
             employee.push (ind)
             })
 
-                    // console.log (employee)
-
-
-
+                // query to pass the roles so the user can choose from a list
                     db.query('SELECT id, title FROM roles', function (err, results) {
                 
                         results.forEach ((item) => {
@@ -109,16 +102,10 @@ function start () {
                     role.push (inr)
                     })
         
-                            // console.log (role)
-        
                     })
+                    // calling function passing 2 params
                     updateEmployee(employee,role)
-
             })
-
-            
-
-            
 
                 break;
 
@@ -133,10 +120,10 @@ function start () {
 
 }
 
-
+// calling start function
     start ()
 
-
+    // function to query for the users selection
     function allDepartments() {
 
         db.query('select departments.name, departments.id from departments', function (err, results) {
@@ -146,7 +133,7 @@ function start () {
         })
     }
 
-
+// function to query for the users selection
     function allRoles() {
 
         db.query('select roles.title, roles.id, departments.name, roles.salary from departments join roles on departments.id=roles.department_id', function (err, results) {
@@ -157,7 +144,7 @@ function start () {
         })
     }
 
-
+// function to query for the users selection
     function allEmployees() {
 
         console.log("All EMPLOYEES")
@@ -169,11 +156,9 @@ function start () {
         })
     }
 
-
+// function to add the users selection
 function addDepartment() {
 
-        // console.log ("Enter Manager information")
-    
         inquirer.prompt ([
             {
                 type: 'input',
@@ -185,7 +170,7 @@ function addDepartment() {
             .then (answer => {
                 
                 db.query(`insert into departments (name) values ("${answer.name}")`, function (err, results) {
-                    console.table(results)
+                    
                 start();
                  
                 })
@@ -196,10 +181,8 @@ function addDepartment() {
     
 }
 
-
+// function to add the users selection
 function addRole() {
-
-    // console.log ("Enter Manager information")
 
     inquirer.prompt ([
         {
@@ -222,7 +205,7 @@ function addRole() {
         .then (answer => {
             
             db.query(`insert into roles (title, salary, department_id) values ("${answer.name}", ${answer.salary}, ${answer.department})`, function (err, results) {
-                console.table(results)
+                
             start();
              
             })
@@ -234,10 +217,8 @@ function addRole() {
 }
 
 
-
+// function to add the users selection
 function addEmployee() {
-
-    // console.log ("Enter Manager information")
 
     inquirer.prompt ([
         {
@@ -265,8 +246,7 @@ function addEmployee() {
         .then (answer => {
             
             db.query(`insert into employees (first_name, last_name, role_id, manager_id)  values ("${answer.first}", "${answer.last}", ${answer.role}, ${answer.manager})`, function (err, results) {
-                console.table(results)
-
+                
             start();
              
             })
@@ -278,14 +258,8 @@ function addEmployee() {
 }
 
 
-
-
+// function to update the users selection
 function updateEmployee(item,role) {
-
-    console.log ("item")
-    console.log ("role")
-
-    // let choice =
 
     inquirer
      .prompt([
@@ -306,7 +280,7 @@ function updateEmployee(item,role) {
     ])
         .then (answer => {
             
-            // choice = answer.choice
+            // variables to select the first word in a string
             let sr = answer.role.split(" ")
             let ar = sr[0]
 
@@ -315,7 +289,6 @@ function updateEmployee(item,role) {
 
 
             db.query(`UPDATE employees set role_id = ${ar} where id =${ac}`, function (err, results) {
-                console.table(results)
 
             start();
              
@@ -329,37 +302,3 @@ function updateEmployee(item,role) {
 
 
 
-
-
-
-
-
-
-
-// view all departments
-// select departments.name, departments.id from departments;
-
-// view all roles
-// select roles.title, roles.id, departments.name, roles.salary
-// from departments join roles on departments.id=roles.department_id;
-
-// view all employees
-// select employees.id, employees.first_name, employees.last_name, roles.title, roles.salary, departments.name
-// from employees left join roles on employees.role_id=roles.id
-// join departments on roles.department_id=departments.id;
-
-
-
-// add department, add role, add employee.
-
-// add a department
-// insert into departments (name) values ("Safety");
-
-// add a role
-// insert into roles values ("title", "59000", "department");
-
-// add a employee
-// insert into employees values ("first name", "last name", "role", "manager");
-
-// update an employee role
-// update roles set title ="title" where id = 5;
